@@ -174,20 +174,47 @@
     // === НАСТРОЙКИ ===
     const ANIMATION_SECONDS = 11.5; // Время анимации в секундах
 
+    // 20 вариантов (при каждом открытии страницы выбираются 6 случайных)
     const sidesText = [
-      "1Плюшевый мишка 🧸",
-      "2Волшебный единорог 🦄",
-      "3Добрая фея снов 🧚‍♀️",
-      "4Маленький дракончик 🐉",
-      "5Умный совёнок 🦉",
-      "6Пушистый котёнок 🐱"
+      "Плюшевый мишка 🧸",
+      "Волшебный единорог 🦄",
+      "Добрая фея снов 🧚‍♀️",
+      "Маленький дракончик 🐉",
+      "Умный совёнок 🦉",
+      "Пушистый котёнок 🐱",
+      "Звёздный зайчонок 🐰",
+      "Золотая рыбка 🐠",
+      "Розовый фламинго 🦩",
+      "Белый медвежонок 🐻‍❄️",
+      "Весёлый щенок 🐶",
+      "Хранитель луны 🌙",
+      "Снежный барсик 🐆",
+      "Радужная бабочка 🦋",
+      "Лесной оленёнок 🦌",
+      "Морская русалочка 🧜‍♀️",
+      "Облачный ангелочек 👼",
+      "Сказочный пегас 🪽",
+      "Маленький лисёнок 🦊",
+      "Светлячок-волшебник ✨"
     ];
     // =================
 
     const cube = document.getElementById('cube');
     cube.style.transition = `transform ${ANIMATION_SECONDS}s cubic-bezier(0.2, 0.8, 0.3, 1)`;
 
-    sidesText.forEach((text, index) => {
+    // Функция случайного перемешивания списка
+    function getRandomSix(items) {
+      const shuffled = [...items];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled.slice(0, 6);
+    }
+
+    // Выбираем 6 случайных пунктов и размещаем их на гранях кубика
+    const selectedSides = getRandomSix(sidesText);
+    selectedSides.forEach((text, index) => {
       document.getElementById(`face-${index}`).innerText = text;
     });
 
