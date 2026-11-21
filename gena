@@ -1,0 +1,137 @@
+<body>
+  <div class="stars" id="stars"></div>
+  <h1 class="main-title">✨ Генератор снов Лизы ✨</h1>
+
+  <div class="drums-container" onclick="rollAll()">
+    <div class="scene-h"><div class="dice" id="dice-h1"></div></div>
+    <div class="scene-v"><div class="dice" id="dice-v"></div></div>
+    <div class="scene-h"><div class="dice" id="dice-h2"></div></div>
+  </div>
+
+  <div class="result-box" id="result">Нажми на кнопку, чтобы узнать свой сказочный сон 🌙</div>
+  <button onclick="rollAll()">Выбрать сон ✨</button>
+
+  <script>
+    // === НАСТРОЙКИ ===
+    const ANIMATION_SECONDS = 22.0;
+
+    const sidesText1 = [
+      "Волшебный единорог", "Пушистый котёнок", "Добрая фея",
+      "Маленький дракончик", "Весёлый щенок", "Сказочная принцесса",
+      "Золотая рыбка", "Белый медвежонок", "Умный совёнок", "Розовый фламинго"
+    ];
+
+    const sidesText2 = [
+      "катает на облаке", "дарит сладкие звёздочки", "поёт нежную колыбельную",
+      "зовёт на весёлый бал", "угощает волшебным мороженым", "учит летать по небу",
+      "исполняет заветное желание", "танцует и кружится", "находит сундук чудес",
+      "строит сказочный домик"
+    ];
+
+    const sidesText3 = [
+      "в стране радуги 🌈", "на мягкой луне 🌙", "в хрустальном замке 🏰",
+      "на цветочном лугу 🌸", "в шоколадном лесу 🍫", "среди пушистых облаков ☁️",
+      "на берегу тёплого моря 🌊", "в саду светлячков ✨", "под звёздным дождём ⭐",
+      "в королевстве сладостей 🍭"
+    ];
+
+    const rainbowColors = [
+      "#FF3B30", "#FF7518", "#FF9500", "#FFCC00", "#8CE000",
+      "#34C759", "#00C7BE", "#007AFF", "#5856D6", "#AF52DE"
+    ];
+    // =================
+
+    const starsContainer = document.getElementById('stars');
+    for (let i = 0; i < 120; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      const size = Math.random() * 3 + 1;
+      star.style.width = `${size}px`;
+      star.style.height = `${size}px`;
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.top = `${Math.random() * 100}%`;
+      star.style.animationDuration = `${Math.random() * 3 + 2}s`;
+      star.style.animationDelay = `${Math.random() * 3}s`;
+      starsContainer.appendChild(star);
+    }
+
+    const numSides = 10;
+    const angleStep = 360 / numSides;
+    const radius = 202; // Радиус уменьшен на 15% (был 238)
+
+    const diceH1 = document.getElementById('dice-h1');
+    const diceV  = document.getElementById('dice-v');
+    const diceH2 = document.getElementById('dice-h2');
+    const resultBox = document.getElementById('result');
+
+    diceH1.style.transition = `transform ${ANIMATION_SECONDS}s cubic-bezier(0.15, 0.85, 0.25, 1)`;
+    diceV.style.transition  = `transform ${ANIMATION_SECONDS}s cubic-bezier(0.15, 0.85, 0.25, 1)`;
+    diceH2.style.transition = `transform ${ANIMATION_SECONDS}s cubic-bezier(0.15, 0.85, 0.25, 1)`;
+
+    diceH1.style.transform = `rotateX(-10deg) rotateY(0deg)`;
+    diceV.style.transform  = `rotateY(0deg) rotateX(0deg)`;
+    diceH2.style.transform = `rotateX(-10deg) rotateY(0deg)`;
+
+    for (let i = 0; i < numSides; i++) {
+      const faceH1 = document.createElement('div');
+      faceH1.className = 'face face-h';
+      faceH1.innerText = sidesText1[i];
+      faceH1.style.backgroundColor = rainbowColors[i % rainbowColors.length];
+      faceH1.style.transform = `rotateY(${i * angleStep}deg) translateZ(${radius}px)`;
+      diceH1.appendChild(faceH1);
+
+      const faceV = document.createElement('div');
+      faceV.className = 'face face-v';
+      faceV.innerText = sidesText2[i];
+      faceV.style.backgroundColor = rainbowColors[(i + 3) % rainbowColors.length];
+      faceV.style.transform = `rotateX(${i * angleStep}deg) translateZ(${radius}px)`;
+      diceV.appendChild(faceV);
+
+      const faceH2 = document.createElement('div');
+      faceH2.className = 'face face-h';
+      faceH2.innerText = sidesText3[i];
+      faceH2.style.backgroundColor = rainbowColors[(i + 6) % rainbowColors.length];
+      faceH2.style.transform = `rotateY(${i * angleStep}deg) translateZ(${radius}px)`;
+      diceH2.appendChild(faceH2);
+    }
+
+    let totalRotationY1 = 0, totalRotationX = 0, totalRotationY2 = 0, resultTimeout;
+
+    function rollAll() {
+      clearTimeout(resultTimeout);
+      const index1 = Math.floor(Math.random() * numSides);
+      const index2 = Math.floor(Math.random() * numSides);
+      const index3 = Math.floor(Math.random() * numSides);
+
+      const spins = Math.max(2, Math.round(ANIMATION_SECONDS * 2));
+      const extraSpinsH1 = (Math.floor(Math.random() * 2) + spins) * 360;
+      const extraSpinsV  = (Math.floor(Math.random() * 2) + spins) * 360;
+      const extraSpinsH2 = (Math.floor(Math.random() * 2) + spins) * 360;
+
+      let diffH1 = (-index1 * angleStep) - (totalRotationY1 % 360);
+      if (diffH1 > 0) diffH1 -= 360;
+      totalRotationY1 += diffH1 - extraSpinsH1;
+
+      let diffV = (-index2 * angleStep) - (totalRotationX % 360);
+      if (diffV > 0) diffV -= 360;
+      totalRotationX += diffV - extraSpinsV;
+
+      let diffH2 = (-index3 * angleStep) - (totalRotationY2 % 360);
+      if (diffH2 < 0) diffH2 += 360;
+      totalRotationY2 += diffH2 + extraSpinsH2;
+
+      diceH1.style.transform = `rotateX(-10deg) rotateY(${totalRotationY1}deg)`;
+      diceV.style.transform  = `rotateY(0deg) rotateX(${totalRotationX}deg)`;
+      diceH2.style.transform = `rotateX(-10deg) rotateY(${totalRotationY2}deg)`;
+
+      resultBox.classList.add('rolling');
+      resultBox.innerText = "Звёздочки сочиняют сказочный сон для Лизы... ✨";
+
+      resultTimeout = setTimeout(() => {
+        resultBox.classList.remove('rolling');
+        resultBox.innerText = `Пусть приснится: ${sidesText1[index1]} ${sidesText2[index2]} ${sidesText3[index3]}`;
+      }, ANIMATION_SECONDS * 1000);
+    }
+  </script>
+</body>
+</html>
