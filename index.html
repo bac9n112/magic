@@ -101,8 +101,7 @@
       position: absolute;
       width: 220px;
       height: 220px;
-      background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(240, 235, 255, 0.9));
-      border: 4px solid #b388ff;
+      border: 4px solid rgba(255, 255, 255, 0.65);
       border-radius: 26px;
       display: flex;
       align-items: center;
@@ -110,19 +109,21 @@
       text-align: center;
       padding: 18px;
       box-sizing: border-box;
-      font-size: 22px;
+      font-size: 25px;
       font-weight: 800;
-      color: #2e1a47;
-      box-shadow: inset 0 0 25px rgba(179, 136, 255, 0.4), 0 0 20px rgba(124, 77, 255, 0.4);
+      color: #ffffff;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.55);
+      box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.35), 0 0 20px rgba(0, 0, 0, 0.35);
       user-select: none;
     }
 
-    .front  { transform: rotateY(  0deg) translateZ(110px); }
-    .back   { transform: rotateY(180deg) translateZ(110px); }
-    .right  { transform: rotateY( 90deg) translateZ(110px); }
-    .left   { transform: rotateY(-90deg) translateZ(110px); }
-    .top    { transform: rotateX( 90deg) translateZ(110px); }
-    .bottom { transform: rotateX(-90deg) translateZ(110px); }
+    /* 6 радужных граней */
+    .front  { background: linear-gradient(135deg, #FF416C, #FF4B2B); transform: rotateY(  0deg) translateZ(110px); } /* Красный */
+    .back   { background: linear-gradient(135deg, #FF8008, #FFA000); transform: rotateY(180deg) translateZ(110px); } /* Оранжевый */
+    .right  { background: linear-gradient(135deg, #F7971E, #FFD200); transform: rotateY( 90deg) translateZ(110px); } /* Жёлтый */
+    .left   { background: linear-gradient(135deg, #11998E, #38EF7D); transform: rotateY(-90deg) translateZ(110px); } /* Зелёный */
+    .top    { background: linear-gradient(135deg, #00C6FF, #0072FF); transform: rotateX( 90deg) translateZ(110px); } /* Голубой/синий */
+    .bottom { background: linear-gradient(135deg, #8E2DE2, #4A00E0); transform: rotateX(-90deg) translateZ(110px); } /* Фиолетовый */
 
     button {
       position: relative;
@@ -174,47 +175,20 @@
     // === НАСТРОЙКИ ===
     const ANIMATION_SECONDS = 11.5; // Время анимации в секундах
 
-    // 20 вариантов (при каждом открытии страницы выбираются 6 случайных)
     const sidesText = [
-      "Плюшевый мишка 🧸",
-      "Волшебный единорог 🦄",
-      "Добрая фея снов 🧚‍♀️",
-      "Маленький дракончик 🐉",
-      "Умный совёнок 🦉",
-      "Пушистый котёнок 🐱",
-      "Звёздный зайчонок 🐰",
-      "Золотая рыбка 🐠",
-      "Розовый фламинго 🦩",
-      "Белый медвежонок 🐻‍❄️",
-      "Весёлый щенок 🐶",
-      "Хранитель луны 🌙",
-      "Снежный барсик 🐆",
-      "Радужная бабочка 🦋",
-      "Лесной оленёнок 🦌",
-      "Морская русалочка 🧜‍♀️",
-      "Облачный ангелочек 👼",
-      "Сказочный пегас 🪽",
-      "Маленький лисёнок 🦊",
-      "Светлячок-волшебник ✨"
+      "Лисёнок 🦊",
+      "Белка 🐿️",
+      "Пикачу ⚡",
+      "Зайка 🐰",
+      "Лягушка 🐸",
+      "Единорожка 🦄"
     ];
     // =================
 
     const cube = document.getElementById('cube');
     cube.style.transition = `transform ${ANIMATION_SECONDS}s cubic-bezier(0.2, 0.8, 0.3, 1)`;
 
-    // Функция случайного перемешивания списка
-    function getRandomSix(items) {
-      const shuffled = [...items];
-      for (let i = shuffled.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-      }
-      return shuffled.slice(0, 6);
-    }
-
-    // Выбираем 6 случайных пунктов и размещаем их на гранях кубика
-    const selectedSides = getRandomSix(sidesText);
-    selectedSides.forEach((text, index) => {
+    sidesText.forEach((text, index) => {
       document.getElementById(`face-${index}`).innerText = text;
     });
 
