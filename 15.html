@@ -43,15 +43,14 @@
       50% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 8px #fff; }
     }
 
-    /* Уменьшили на 15% */
     .main-title {
       position: relative;
       z-index: 10;
       font-family: 'Marck Script', cursive;
-      font-size: 52px;
+      font-size: 46px;
       font-weight: normal;
       color: #fff6d6;
-      margin: 0 0 90px 0;
+      margin: 0 0 75px 0;
       text-align: center;
       text-shadow: 0 0 10px rgba(255, 215, 0, 0.7), 0 0 25px rgba(255, 105, 180, 0.6), 0 4px 10px rgba(0, 0, 0, 0.8);
       letter-spacing: 2px;
@@ -64,12 +63,12 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 72px;
-      margin-bottom: 105px;
+      gap: 64px;
+      margin-bottom: 90px;
     }
 
-    .scene-h { width: 255px; height: 178px; perspective: 1300px; cursor: pointer; }
-    .scene-v { width: 178px; height: 255px; perspective: 1300px; cursor: pointer; }
+    .scene-h { width: 230px; height: 160px; perspective: 1200px; cursor: pointer; }
+    .scene-v { width: 160px; height: 230px; perspective: 1200px; cursor: pointer; }
     .dice { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; }
 
     .face {
@@ -77,38 +76,37 @@
       left: 50%;
       top: 50%;
       border: 3px solid rgba(255, 255, 255, 0.45);
-      border-radius: 15px;
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 10px;
+      padding: 8px;
       box-sizing: border-box;
-      font-size: 17px;
+      font-size: 15px;
       font-weight: 800;
       color: #fff;
       text-shadow: 0 2px 5px rgba(0, 0, 0, 0.65);
-      box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.35), 0 0 12px rgba(0, 0, 0, 0.4);
+      box-shadow: inset 0 0 18px rgba(255, 255, 255, 0.35), 0 0 10px rgba(0, 0, 0, 0.4);
       user-select: none;
       backface-visibility: hidden;
     }
 
-    /* Размеры граней уменьшены на 15% */
-    .face-h { width: 132px; height: 170px; margin-left: -66px; margin-top: -85px; }
-    .face-v { width: 170px; height: 132px; margin-left: -85px; margin-top: -66px; }
+    .face-h { width: 118px; height: 153px; margin-left: -59px; margin-top: -76.5px; }
+    .face-v { width: 153px; height: 118px; margin-left: -76.5px; margin-top: -59px; }
 
     .result-box {
       position: relative;
       z-index: 10;
-      min-height: 38px;
+      min-height: 34px;
       max-width: 88vw;
-      margin-bottom: 20px;
-      padding: 14px 32px;
+      margin-bottom: 18px;
+      padding: 12px 28px;
       background: rgba(255, 255, 255, 0.95);
       border: 3px solid #ffd700;
-      border-radius: 18px;
+      border-radius: 16px;
       box-shadow: 0 0 25px rgba(255, 215, 0, 0.35), 0 8px 20px rgba(0, 0, 0, 0.4);
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 800;
       color: #2b1e4a;
       text-align: center;
@@ -120,9 +118,9 @@
     button {
       position: relative;
       z-index: 10;
-      padding: 15px 44px;
+      padding: 14px 40px;
       font-family: 'Nunito', sans-serif;
-      font-size: 19px;
+      font-size: 18px;
       font-weight: 800;
       color: #fff;
       background: linear-gradient(135deg, #ff6bcb 0%, #7366ff 100%);
@@ -136,10 +134,9 @@
     button:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 0 30px rgba(255, 107, 203, 0.8), 0 8px 20px rgba(0, 0, 0, 0.5); }
     button:active { transform: scale(0.97); }
 
-    /* Дополнительная подстройка, если iPad держат вертикально */
     @media (max-width: 900px) {
-      .drums-container { transform: scale(0.82); margin-bottom: 85px; }
-      .main-title { font-size: 46px; margin-bottom: 70px; }
+      .drums-container { transform: scale(0.76); margin-bottom: 70px; }
+      .main-title { font-size: 40px; margin-bottom: 55px; }
     }
   </style>
 </head>
@@ -202,7 +199,7 @@
 
     const numSides = 10;
     const angleStep = 360 / numSides;
-    const radius = 202; // Радиус уменьшен на 15% (был 238)
+    const radius = 182; // Радиус уменьшен еще на 10% (был 202)
 
     const diceH1 = document.getElementById('dice-h1');
     const diceV  = document.getElementById('dice-v');
